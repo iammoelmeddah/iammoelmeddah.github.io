@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mo El Meddah | قريباً</title>
+    <title>Mo El Meddah | مطور واجهات ومصمم UI/UX</title>
     <!-- خط Cairo الجميل -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <!-- مكتبة الأيقونات -->
@@ -16,9 +16,9 @@
         }
 
         :root {
-            --primary-color: #00bcd4; /* اللون السيان المضيء */
-            --bg-color: #ffffff;     /* الأبيض النقي */
-            --text-dark: #1e293b;     /* رمادي غامق جداً للنصوص */
+            --primary-color: #00bcd4; /* اللون السيان المضيء (Main Color) */
+            --bg-color: #f8fafc;     /* خلفية الصفحة العامة الفاتحة */
+            --text-dark: #1e293b;     /* رمادي غامق للنصوص */
             --text-light: #64748b;    /* رمادي متوسط */
         }
 
@@ -33,23 +33,77 @@
             align-items: center;
             overflow-x: hidden;
             position: relative;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            background-size: 400% 400%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
 
-        .header-spacer { height: 1px; }
+        /* --- أنيميشن النجوم والخيوط في الخلفية العامة --- */
+        .background-animation {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
+        /* --- تم تعديل لون الخيوط هنا ليصبح مثل الـ Main Color --- */
+        .ray {
+            position: absolute;
+            top: -150px;
+            width: 2px; /* زيادة العرض قليلاً لوضوح اللون */
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, var(--primary-color), transparent);
+            animation: fallRay 6s linear infinite;
+            opacity: 0.6; /* شفافية مناسبة */
+        }
+
+        .ray:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 5s; }
+        .ray:nth-child(2) { left: 35%; animation-delay: 2s; animation-duration: 7s; }
+        .ray:nth-child(3) { left: 75%; animation-delay: 1s; animation-duration: 6s; }
+        .ray:nth-child(4) { left: 95%; animation-delay: 3s; animation-duration: 8s; }
+
+        @keyframes fallRay {
+            0% { transform: translateY(0) scaleY(1); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(110vh) scaleY(1.5); opacity: 0; }
+        }
+
+        /* نجوم ونقاط تتلألأ (تضوي وتنطفي) */
+        .dot {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-color);
+            animation: blinkDot 4s ease-in-out infinite;
+        }
+
+        .dot:nth-child(5) { top: 10%; left: 20%; animation-delay: 0.5s; }
+        .dot:nth-child(6) { top: 30%; left: 80%; animation-delay: 1.5s; }
+        .dot:nth-child(7) { top: 60%; left: 15%; animation-delay: 2.5s; }
+        .dot:nth-child(8) { top: 90%; left: 75%; animation-delay: 1s; }
+
+        @keyframes blinkDot {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
+
+        /* --- الحاوية الرئيسية --- */
         .main-container {
             position: relative;
             z-index: 1;
             text-align: center;
-            padding: 3rem 2rem;
             max-width: 750px;
-            width: 100%;
+            width: 90%;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            padding-bottom: 2.5rem;
             opacity: 0;
             animation: pageLoadIn 1s ease-out forwards;
         }
@@ -59,29 +113,45 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- تصميم الصورة الشخصية (تدحرج ذهاباً وإياباً) --- */
+        /* --- كفر الفيسبوك --- */
+        .profile-cover {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-cover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.4));
+        }
+
+        /* --- تصميم الصورة الشخصية (تدحرج هادئ بـ 10 درجات) --- */
         .profile-wrapper {
             position: relative;
+            margin-top: -75px;
             margin-bottom: 1rem;
+            z-index: 2;
         }
 
         .profile-img-container {
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             padding: 5px;
-            background: linear-gradient(45deg, var(--primary-color), #ffffff, var(--primary-color));
+            background: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            z-index: 2;
-            box-shadow: 0 10px 40px -10px rgba(0, 188, 212, 0.3);
-            /* تطبيق أنيميشن التدحرج الجديد */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             animation: rollHead 4s ease-in-out infinite;
         }
 
-        /* تعريف حركة التدحرج 33 درجة يميناً ويساراً */
         @keyframes rollHead {
             0%, 100% { transform: rotate(0deg); }
             25% { transform: rotate(10deg); }
@@ -93,98 +163,70 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--bg-color);
-        }
-
-        /* تأثير النبض خلف الصورة */
-        .profile-wrapper::before {
-            content: '';
-            position: absolute;
-            inset: -20px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            opacity: 0.2;
-            animation: pulseRing 2s infinite;
-            z-index: 1;
-        }
-
-        @keyframes pulseRing {
-            0% { transform: scale(0.8); opacity: 0.3; }
-            100% { transform: scale(1.2); opacity: 0; }
+            border: 3px solid var(--primary-color);
         }
 
         /* --- النصوص والعناصر --- */
+        .content-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 0 2rem;
+            width: 100%;
+        }
 
-        /* نقلنا ستايل المربع إلى "مرحباً أنا" وتم حذف "قريباً جداً" */
         .framed-badge {
             display: inline-block;
             background: var(--primary-color);
             color: #ffffff;
-            padding: 8px 25px; /* تكبير الحشوة قليلاً */
+            padding: 6px 20px;
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.3s forwards;
-        }
-
-        .intro-text {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            font-weight: 400;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.4s forwards;
-            margin-bottom: -0.5rem; /* لتقليل المسافة مع الاسم */
+            box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
         }
 
         h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 900;
             color: var(--text-dark);
             line-height: 1.1;
             letter-spacing: -1px;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.5s forwards;
         }
 
-        /* الاسم بأول حروف كابيتال */
         h1 span {
             color: var(--primary-color);
         }
 
         p {
             color: var(--text-light);
-            font-size: 1.1rem;
+            font-size: 1.02rem;
             line-height: 1.8;
-            max-width: 600px;
+            max-width: 580px;
             margin: 0 auto;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.6s forwards;
         }
 
-        /* --- أيقونات التواصل الاجتماعي (في صف واحد) --- */
+        /* --- أيقونات التواصل الاجتماعي --- */
         .social-links {
             display: flex;
-            justify-content: center; /* توسيط الأيقونات */
-            gap: 20px; /* مسافة بين الأيقونات */
-            margin-top: 1rem;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out 0.7s forwards;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 0.5rem;
             width: 100%;
         }
 
         .social-icon {
-            width: 50px; /* تكبير الأيقونات قليلاً */
-            height: 50px;
+            width: 48px;
+            height: 48px;
             background: #f1f5f9;
             color: var(--text-light);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             text-decoration: none;
             transition: all 0.3s ease;
             border: 1px solid #e2e8f0;
@@ -193,7 +235,7 @@
         .social-icon:hover {
             background: var(--primary-color);
             color: #ffffff;
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-4px) scale(1.05);
             box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
             border-color: transparent;
         }
@@ -204,62 +246,61 @@
             z-index: 1;
             font-size: 0.85rem;
             color: var(--text-light);
-            padding: 2rem 1rem;
+            padding: 1.2rem;
             width: 100%;
             text-align: center;
-            border-top: 1px solid #f1f5f9;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            animation: fadeIn 1s ease-in 1s forwards;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #e2e8f0;
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            .profile-img-container { width: 130px; height: 130px; }
-            .main-container { padding: 2rem 1rem; }
-            p { font-size: 1rem; }
-            .social-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+            h1 { font-size: 2.3rem; }
+            .profile-img-container { width: 120px; height: 120px; }
+            .profile-cover { height: 160px; }
+            .profile-wrapper { margin-top: -60px; }
+            .main-container { width: 95%; margin: 20px auto; }
+            .content-body { padding: 0 1rem; }
+            p { font-size: 0.92rem; }
+            .social-icon { width: 42px; height: 42px; font-size: 1.1rem; }
+            .ray { width: 1px; } /* تقليل العرض قليلاً للشاشات الصغيرة */
         }
     </style>
 </head>
 <body>
 
-    <div class="header-spacer"></div>
+    <div class="background-animation">
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
 
     <div class="main-container">
-        <!-- الصورة الشخصية (تتدحرج الآن) -->
+        <div class="profile-cover"></div>
+
         <div class="profile-wrapper">
             <div class="profile-img-container">
                 <img src="https://pbs.twimg.com/profile_images/2087289185715867648/iRKwRxK__400x400.jpg" alt="Mo El Meddah" class="profile-img">
             </div>
         </div>
 
-        <!-- المربع أصبح هنا -->
-        <div class="framed-badge">مرحباً، أنا</div>
-        
-        <!-- تم حذف "قريباً جداً" -->
-        
-        <!-- الاسم بأول حروف كابيتال -->
-        <h1>Mo El <span>Meddah</span></h1>
+        <div class="content-body">
+            <div class="framed-badge">مرحباً، أنا</div>
+            
+            <h1>Mo El <span>Meddah</span></h1>
 
-        <p>أعمل حالياً على هندسة وتطوير تجربتي الرقمية الجديدة. ترقبوا شيئاً مميزاً واحترافياً للغاية.</p>
-        
-        <!-- أيقونات التواصل الاجتماعي (في صف واحد) -->
-        <div class="social-links">
-            <a href="#" class="social-icon" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" class="social-icon" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <p>مطور واجهات أمامية ومصمم جرافيك متخصص في تصميم واجهات وتجربة المستخدم (UI/UX)، أعمل على بناء وتطوير المواقع والمدونات المخصصة للشركات والأفراد مع التركيز على دقة التصميم وسلاسة الأداء.</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/iammoelmeddah" class="social-icon" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/iammoelmeddah" class="social-icon" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://instagram.com/iammoelmeddah" class="social-icon" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/iammoelmeddah" class="social-icon" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
         </div>
     </div>
 
