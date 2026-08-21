@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
+<html lang="ar" dir="rtl"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mo El Meddah | مطور واجهات ومصمم UI/UX</title>
     <!-- خط Cairo الجميل -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&amp;display=swap" rel="stylesheet">
     <!-- مكتبة الأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -16,11 +14,32 @@
         }
 
         :root {
-            --primary-color: #00bcd4; /* اللون السيان المضيء (Main Color) */
+            --primary-color: #00bcd4; /* اللون السيان المضيء */
             --bg-color: #f8fafc;     /* خلفية الصفحة العامة الفاتحة */
             --text-dark: #1e293b;     /* رمادي غامق للنصوص */
             --text-light: #64748b;    /* رمادي متوسط */
+            --card-bg: #ffffff;       /* خلفية الحاويات */
+            --navbar-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #e2e8f0;
+            --btn-bg-light: #f1f5f9;  /* خلفية الأزرار الافتراضية الرمادية */
         }
+
+        /* --- دعم الدارك مود (الوضع الليلي) --- */
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --text-dark: #f8fafc;
+            --text-light: #94a3b8;
+            --card-bg: #1e293b;
+            --navbar-bg: rgba(15, 23, 42, 0.95);
+            --border-color: #334155;
+            --btn-bg-light: #334155; /* خلفية الأزرار في الدارك مود */
+            background: linear-gradient(135deg, #0f172a 0%, #090d16 100%) !important;
+        }
+
+        body.dark-mode .main-container { background: var(--card-bg); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); }
+        body.dark-mode footer { background: rgba(15, 23, 42, 0.9); }
+        body.dark-mode .social-icon { background: #1e293b; color: var(--text-light); border-color: var(--border-color); }
+        body.dark-mode .nav-item, body.dark-mode .nav-action-btn { background-color: var(--btn-bg-light); color: var(--text-dark); }
 
         body {
             font-family: 'Cairo', sans-serif;
@@ -34,9 +53,82 @@
             overflow-x: hidden;
             position: relative;
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding-top: 50px;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* --- أنيميشن النجوم والخيوط في الخلفية العامة --- */
+        /* --- القائمة العلوية --- */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 750px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        /* القائمة في اليمين */
+        .nav-links {
+            display: flex;
+            gap: 6px;
+            list-style: none;
+        }
+
+        /* تصميم موحد لجميع عناصر شريط التنقل (بدون بوردر، خلفية رمادية، هوفر باللون الرئيسي) */
+        .nav-item, .nav-action-btn {
+            background: var(--btn-bg-light);
+            border: none;
+            color: var(--text-light);
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            outline: none;
+        }
+
+        .nav-item:hover, .nav-action-btn:hover {
+            background: var(--primary-color) !important;
+            color: #ffffff !important;
+        }
+
+        /* الأزرار في اليسار */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-action-btn i {
+            font-size: 0.95rem; /* تكبير الأيقونات لتتطابق مع البقية */
+        }
+
+        /* --- أنيميشن الخلفية --- */
         .background-animation {
             position: absolute;
             inset: 0;
@@ -45,15 +137,14 @@
             overflow: hidden;
         }
 
-        /* --- تم تعديل لون الخيوط هنا ليصبح مثل الـ Main Color --- */
         .ray {
             position: absolute;
             top: -150px;
-            width: 2px; /* زيادة العرض قليلاً لوضوح اللون */
+            width: 2px;
             height: 150px;
             background: linear-gradient(to bottom, transparent, var(--primary-color), transparent);
             animation: fallRay 6s linear infinite;
-            opacity: 0.6; /* شفافية مناسبة */
+            opacity: 0.6;
         }
 
         .ray:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 5s; }
@@ -67,7 +158,6 @@
             100% { transform: translateY(110vh) scaleY(1.5); opacity: 0; }
         }
 
-        /* نجوم ونقاط تتلألأ (تضوي وتنطفي) */
         .dot {
             position: absolute;
             width: 5px;
@@ -95,8 +185,8 @@
             text-align: center;
             max-width: 750px;
             width: 90%;
-            margin: 40px auto;
-            background: #ffffff;
+            margin: 30px auto;
+            background: var(--card-bg);
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
             overflow: hidden;
@@ -106,6 +196,7 @@
             padding-bottom: 2.5rem;
             opacity: 0;
             animation: pageLoadIn 1s ease-out forwards;
+            transition: background 0.3s ease;
         }
 
         @keyframes pageLoadIn {
@@ -113,11 +204,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- كفر الفيسبوك --- */
         .profile-cover {
             width: 100%;
             height: 220px;
             position: relative;
+            margin-top: 0;
             background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
@@ -130,7 +221,6 @@
             background: linear-gradient(to bottom, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.4));
         }
 
-        /* --- تصميم الصورة الشخصية (تدحرج هادئ بـ 10 درجات) --- */
         .profile-wrapper {
             position: relative;
             margin-top: -75px;
@@ -143,13 +233,14 @@
             height: 140px;
             border-radius: 50%;
             padding: 5px;
-            background: #ffffff;
+            background: var(--card-bg);
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             animation: rollHead 4s ease-in-out infinite;
+            transition: background 0.3s ease;
         }
 
         @keyframes rollHead {
@@ -166,7 +257,6 @@
             border: 3px solid var(--primary-color);
         }
 
-        /* --- النصوص والعناصر --- */
         .content-body {
             display: flex;
             flex-direction: column;
@@ -181,7 +271,7 @@
             background: var(--primary-color);
             color: #ffffff;
             padding: 6px 20px;
-            border-radius: 50px;
+            border-radius: 50%;
             font-size: 0.85rem;
             font-weight: 700;
             letter-spacing: 1px;
@@ -208,7 +298,6 @@
             margin: 0 auto;
         }
 
-        /* --- أيقونات التواصل الاجتماعي --- */
         .social-links {
             display: flex;
             justify-content: center;
@@ -229,7 +318,7 @@
             font-size: 1.3rem;
             text-decoration: none;
             transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-color);
         }
 
         .social-icon:hover {
@@ -240,7 +329,6 @@
             border-color: transparent;
         }
 
-        /* --- الفوتر السفلي --- */
         footer {
             position: relative;
             z-index: 1;
@@ -249,8 +337,10 @@
             padding: 1.2rem;
             width: 100%;
             text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            border-top: 1px solid #e2e8f0;
+            background: var(--navbar-bg);
+            border-top: 1px solid var(--border-color);
+            margin-top: 30px;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         @media (max-width: 600px) {
@@ -262,11 +352,39 @@
             .content-body { padding: 0 1rem; }
             p { font-size: 0.92rem; }
             .social-icon { width: 42px; height: 42px; font-size: 1.1rem; }
-            .ray { width: 1px; } /* تقليل العرض قليلاً للشاشات الصغيرة */
+            .top-navbar { padding: 0 1rem; }
+            .nav-links { gap: 4px; }
+            .nav-item, .nav-action-btn { padding: 0 8px; font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- القائمة العلوية -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <!-- القائمة في اليمين -->
+            <ul class="nav-links">
+                <li><a href="#" class="nav-item">الرئيسية</a></li>
+                <li><a href="#" class="nav-item">عني</a></li>
+                <li><a href="#" class="nav-item">تواصل</a></li>
+            </ul>
+
+            <!-- الأزرار في اليسار -->
+            <div class="nav-left">
+                <!-- زر اللغة الطبيعي مع الأيقونة والاسم -->
+                <button class="nav-action-btn" title="تغيير اللغة">
+                    <i class="fas fa-globe"></i>
+                    <span>English</span>
+                </button>
+
+                <!-- زر الوضع الليلي -->
+                <button class="nav-action-btn" id="darkModeToggle" title="تبديل الوضع الليلي">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
     <div class="background-animation">
         <div class="ray"></div>
@@ -308,5 +426,21 @@
         جميع الحقوق محفوظة © 2026 | تصميم وتطوير Mo El Meddah
     </footer>
 
-</body>
-</html>
+    <!-- سكريبت الوضع الليلي -->
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = darkModeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+    </script>
+
+
+</body></html>
