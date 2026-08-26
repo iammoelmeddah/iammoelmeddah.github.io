@@ -16,6 +16,14 @@
                 margin: 0;
                 background-color: #f2f5f8;
             }
+            body::before {
+                content: "";
+                inset: 0;
+                z-index: -1;
+                opacity: .15;
+                position: absolute;
+                background: url(profile-photo.webp) no-repeat fixed  center / cover;
+            }
             .site-content {
                 display: flex;
                 padding: 2.5rem;
@@ -39,6 +47,9 @@
                 margin-bottom: 0;
                 font-weight: 700;
             }
+            .site-job {
+                margin-top: .5rem;
+            }
             .site-job svg {
                 vertical-align: text-top;
                 --uae-svg-flag-size: 1.3em;
@@ -46,7 +57,17 @@
                 height: var(--uae-svg-flag-size);
             }
             .site-bio {
+                margin-top: 0;
                 max-width: 500px;
+            }
+            .freelance-links {
+                gap: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                margin-block: .75rem 2.5rem;
+            }
+            .freelance-links > a > svg {
+                border-radius: .375rem;
             }
             .signature {
                 opacity: 0.6;
