@@ -71,9 +71,23 @@
           flex-wrap: wrap;
           margin-block: .75rem 2.5rem;
         }
-        .freelance-links > a > svg {
-          border-radius: .375rem;
+        .freelance-links > li > a > svg {
+          border-radius: .5rem;
         }
+        .freelance-links > li > a:hover > svg {
+          animation: light-shake 0.5s ease-in-out;
+        }
+        
+        @keyframes light-shake {
+          0% { transform: translateY(0); }
+          20% { transform: translateY(-3px) rotate(-1deg); }
+          40% { transform: translateY(3px) rotate(1deg); }
+          60% { transform: translateY(-2px) rotate(-0.5deg); }
+          80% { transform: translateY(2px) rotate(0.5deg); }
+          100% { transform: translateY(0); }
+        }
+
+      
         .signature {
           opacity: 0.6;
           width: 220px;
